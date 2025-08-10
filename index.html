@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flipbook Godišnjaka 2016–2025 - IDSS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3.0.0/turn.min.css">
+  <style>
+    /* Resetiranje margina i paddinga */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Osnovni stilovi za tijelo stranice */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Flipbook kontejner */
+    #flipbook {
+      width: 100%;
+      height: 100%;
+      max-width: 210mm;
+      max-height: 297mm;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    /* Stilovi za navigacijske tipke */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .nav-button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    #prev {
+      left: 10px;
+    }
+    #next {
+      right: 10px;
+    }
+    /* Stilovi za indikator trenutne stranice */
+    #page-indicator {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flipbook kontejner -->
+  <div id="flipbook">
+    <!-- Stranice flipbooka -->
+    <div class="hard">Stranica 1</div>
+    <div class="hard">Stranica 2</div>
+    <div class="hard">Stranica 3</div>
+    <div class="hard">Stranica 4</div>
+    <!-- Dodajte više stranica po potrebi -->
+  </div>
+
+  <!-- Navigacijske tipke -->
+  <button id="prev" class="nav-button">Prethodna</button>
+  <button id="next" class="nav-button">Sljedeća</button>
+
+  <!-- Indikator trenutne stranice -->
+  <div id="page-indicator">Stranica 1</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3.0.0/turn.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Inicijalizacija flipbooka
+      $('#flipbook').turn({
+        width: '100%',
+        height: '100%',
+        autoCenter: true,
+        display: 'double',
+        acceleration: true,
+        gradients: true,
+        elevation: 50,
+        duration: 800,
+        when: {
+          turning: function(e, page, view) {
+            // Ažuriranje indikatora trenutne stranice
+            $('#page-indicator').text('Stranica ' + page);
+          }
+        }
+      });
+
+      // Funkcionalnost za navigacijske tipke
+      $('#prev').click(function() {
+        $('#flipbook').turn('previous');
+      });
+      $('#next').click(function() {
+        $('#flipbook').turn('next');
+      });
+
+      // Tastaturna navigacija
+      $(document).keydown(function(e) {
+        switch(e.key) {
+          case 'ArrowLeft':
+            $('#flipbook').turn('previous');
+            break;
+          case 'ArrowRight':
+            $('#flipbook').turn('next');
+            break;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
